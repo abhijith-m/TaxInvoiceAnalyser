@@ -1,0 +1,4 @@
+[project]
+name = "TaxInvoiceAnalyser"
+version = "0.1.0"
+description = "Project for Kosh.ai"

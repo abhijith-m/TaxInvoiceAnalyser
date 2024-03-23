@@ -1,0 +1,14 @@
+/venv
+/.pytest_cache
+/OLD_Files
+/SQL
+/__pycache__
+/.idea
+/Scripts/Logs
+/Scripts/__pycache__
+/db_helper/__pycache__
+/Utils/__pycache__
+/Logs/record.log
+/Files/Initial Upload PDF.csv
+/Files/Initial Upload PDF.pdf
+/Files/Test PDF.csv
