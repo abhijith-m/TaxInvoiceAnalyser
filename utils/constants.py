@@ -1,3 +1,9 @@
+MAX_SUB_BROKER_LEN = 21
+
+MAX_BORROWER_LEN = 31
+
+TRANSACTION_BATCH_SIZE = 20
+
 CREATE_TABLE_TRANSACTION = ("CREATE TABLE IF NOT EXISTS INVOICE_TRANSACTION ("
                             "app_id int NOT NULL, "
                             "xref int NOT NULL, "
@@ -19,10 +25,19 @@ TOT_LOAN_AMT = ("SELECT sum(total_loan_amt) FROM INVOICE_TRANSACTION "
                 "WHERE settlement_date > %s and settlement_date < %s;")
 
 HIGHEST_LOAN_BY_BROKER = ("SELECT total_loan_amt FROM INVOICE_TRANSACTION "
-                          "WHERE broker_name = %s ORDER BY DESC LIMIT 1; ")
+                          "WHERE broker_name = %s ORDER BY total_loan_amt DESC LIMIT 1; ")
 
 LOANS_BY_BROKER = ("SELECT settlement_date, total_loan_amt FROM INVOICE_TRANSACTION "
-                   "WHERE broker_name = %s ORDER BY DESC;")
+                   "WHERE broker_name = %s ORDER BY settlement_date ASC, total_loan_amt DESC;")
 
-LOANS_BY_DATE = ("SELECT settlement_date, SUM(total_loan_amt) FROM INVOICE_TRANSACTION "
-                 "GROUP BY settlement_date;")
+GROUP_LOANS_BY_DATE = ("SELECT settlement_date, SUM(total_loan_amt) FROM INVOICE_TRANSACTION "
+                       "GROUP BY settlement_date;")
+
+TIER_1_LOANS_COUNT = ("SELECT settlement_date, COUNT(total_loan_amt) FROM INVOICE_TRANSACTION "
+                      "WHERE total_loan_amt > 100000 GROUP BY settlement_date;")
+
+TIER_2_LOANS_COUNT = ("SELECT settlement_date, COUNT(total_loan_amt) FROM INVOICE_TRANSACTION "
+                      "WHERE total_loan_amt > 50000 and total_loan_amt < 100000 GROUP BY settlement_date;")
+
+TIER_3_LOANS_COUNT = ("SELECT settlement_date, COUNT(total_loan_amt) FROM INVOICE_TRANSACTION "
+                      "WHERE total_loan_amt > 10000 and total_loan_amt < 50000 GROUP BY settlement_date;")
