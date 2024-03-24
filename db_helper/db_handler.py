@@ -112,7 +112,6 @@ class Db:
     def __init__(self, url):
         logger.info("Creating database table")
         Db.CONNECTION_STRING = url
-        print(url)
         Db.create_tables()
         logger.info("Created database table")
 
