@@ -7,10 +7,10 @@ def get_highest_loan_amt_by_broker(broker_name: str):
     try:
         result = get_highest_loan_broker(broker_name)
         if not result:
-            print(f"Broker with name: {broker_name} doesn't have any loans")
+            print(f"Broker with name: {broker_name} doesn't have any loans\n")
             return
         high_loan_amt, = result
-        print(f"\nHighest loan amount of Broker with name: {broker_name} = {high_loan_amt}")
+        print(f"\nHighest loan amount of Broker with name: {broker_name} = {high_loan_amt}\n")
     except BaseException as e:
         raise e
 
@@ -18,13 +18,13 @@ def get_loan_amt_for_time_range(start_date, end_date):
     try:
         start_date = datetime.strptime(start_date, '%d/%m/%Y').date()
         end_date = datetime.strptime(end_date, '%d/%m/%Y').date()
-        if start_date <= end_date:
-            raise Exception(f'Start date should be less than End date.')
+        if start_date > end_date:
+            raise Exception(f'Start date should be less than or equal to End date.\n')
 
         result = get_loan_amount(start_date, end_date)
         loan_amt = result[0] if result else 0
 
-        print(f"\nTotal loan amount from {start_date} to {end_date} : {loan_amt} ")
+        print(f"\nTotal loan amount from {start_date} to {end_date} : {loan_amt} \n")
     except BaseException as e:
         print(e)
         raise e
@@ -35,7 +35,7 @@ def get_datewise_loan_amt_for_broker(broker_name):
         if result:
             display_datewise_loan(result)
         else:
-            print(f'\nNo loan exists for broker: {broker_name}.')
+            print(f'\nNo loan exists for broker: {broker_name}.\n')
     except BaseException as e:
         raise e
 
@@ -45,7 +45,7 @@ def total_loans_by_date():
         if result:
             display_datewise_loan(result)
         else:
-            print(f'\nNo loan exists.')
+            print(f'\nNo loan exists.\n')
     except BaseException as e:
         raise e
 
@@ -96,28 +96,28 @@ if __name__ == "__main__":
     inp = int(input('Input your option: ').strip())
     match inp:
         case 1:
-            print('Please enter date range in format DD/MM/YYYY')
+            print('\nPlease enter date range in format DD/MM/YYYY')
             st_date = input('Start Date: ').strip()
             end_date = input('End Date: ').strip()
             get_loan_amt_for_time_range(st_date, end_date)
 
         case 2:
-            print('Highest loan amount given by a broker.')
+            print('\nHighest loan amount given by a broker:')
             broker_name = input('Enter Broker name: ').strip()
             get_highest_loan_amt_by_broker(broker_name)
 
         case 3:
-            print("Date-wise report of loan amounts for a broker.")
+            print("\nDate-wise report of loan amounts for a broker:")
             broker_name = input('Enter Broker name: ').strip()
             get_datewise_loan_amt_for_broker(broker_name)
 
         case 4:
-            print("Total loan amounts grouped by date.")
+            print("\nTotal loan amounts grouped by date:")
             total_loans_by_date()
 
         case 5:
-            print('Tier-wise total loan amounts.')
+            print('\nTier-wise total loan amounts:')
             tier_wise_group_loan_amt()
 
         case _:
-            print('Please select valid input. Exiting.')
+            print('\nPlease select valid input. Exiting.')

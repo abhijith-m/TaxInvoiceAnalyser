@@ -121,6 +121,8 @@ class Db:
             with psycopg2.connect(Db.CONNECTION_STRING) as conn:
                 with conn.cursor() as cursor:
                     cursor.execute(constants.CREATE_TABLE_TRANSACTION)
+                    cursor.execute(constants.DATE_WISE_LOAN_INDEX)
+                    cursor.execute(constants.BROKER_WISE_LOAN_INDEX)
         except psycopg2.InterfaceError as e:
             logger.error(f'Error while creating table {e}')
 
